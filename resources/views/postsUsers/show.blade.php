@@ -26,9 +26,6 @@
                     </a>
                     <p class="text-muted mb-0">
                         <span>{{ $post->user->name }}</span>
-                        @php
-                            dd($post->toArray());
-                        @endphp
                         <span>{{ $post->statusPost->name }}</span>
                         <span>{{ $post->created_at->format('d M Y') }}</span>
                     </p>
