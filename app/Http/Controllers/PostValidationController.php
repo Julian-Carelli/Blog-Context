@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Post;
+use App\Models\User;
+use App\Models\CategoryUser;
 use App\Http\Requests\PostRequest;
 use Illuminate\Pagination\Paginator;
 
@@ -12,6 +15,7 @@ class PostValidationController extends Controller
 
     public function __construct()
     {
+        $this->middleware('auth');
         $this->paginator =  Paginator::useBootstrap();
     }
 
@@ -39,11 +43,34 @@ class PostValidationController extends Controller
 
     public function show(Post $post)
     {
-        $posts = Post::where('is_validate', 1)->where('status_posts_id', 1);
-        $postOrdered = $posts->orderBy('created_at', 'desc');
+        $userExist = User::where('id', auth()->user()->id)
+        ->where('is_validate', 1)->first();
+        $allCategoryUser = CategoryUser::where('user_id', auth()->user()->id)->get();
+        $postCategoryForUser = [];
+        $categorySearch = [];
+
+        foreach($allCategoryUser as $key => $item){
+            $filterPostUser = Post::where('category_id', $item->category->id)
+                ->where('status_posts_id', 1)
+                ->where('is_validate', 1)
+                ->get();
+            $categorySearch[$key] = $item->category->id;
+            array_push($categorySearch, $item->category->id);
+            if (count($filterPostUser) > 0) {
+                array_push($postCategoryForUser, $filterPostUser);
+            }
+        }
+
+
+        $post = Post::whereNotIn('category_id', $categorySearch)
+            ->where('status_posts_id', 1)
+            ->where('is_validate', 1)
+            ->get();;
+        array_push($postCategoryForUser, $post);
+
 
         return view('postsValidation.show', [
-            'posts' => $postOrdered->paginate(10),
+            'posts' => $postCategoryForUser,
         ]);
     }
 

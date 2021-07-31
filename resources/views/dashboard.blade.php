@@ -34,15 +34,16 @@
                         <tbody>
                             @foreach($posts as $post)
                             <tr>
+
                                 <td>
                                     <a href="{{route('posts.show', $post->id)}}">{{ $post->id }}</a>
                                 </td>
                                 <td>
-                                    <a href="{{route('postsValidation.index', $post->user)}}">
+                                    <a href="{{route('postsValidation.index', $post->user_id)}}">
                                         {{ $post->user->name }}
                                     </a>
                                 </td>
-                                <td>{{ $post->category->title }}</td>
+                                <td>{{ ucfirst($post->category->title) }}</td>
                                 <td>{{ $post->title }}</td>
                                 <td>{{ $post->created_at }}</td>
                                 <td>

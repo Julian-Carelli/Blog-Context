@@ -9,7 +9,7 @@
             </div>
             <div class="col-sm-12 pt-3">
                 <h2>Editar Post</h2>
-                <span>Creado por el usuario {{$post->user->name}} en la fecha {{ $post->created_at }}</span>
+                <span>Creado por el usuario {{ $post->user->name }} en la fecha {{ $post->created_at }}</span>
             </div>
         </div>
         <form style="width:70%;" action="{{ route('posts.update', $post->id )}}" method="POST">

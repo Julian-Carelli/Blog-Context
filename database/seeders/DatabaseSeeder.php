@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\CategoryUser;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,10 +29,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('secret'),
         ]);
 
-        Category::create([
-            'id' => 1,
-            'title' => 'personal'
-        ]);
+        CategoryUser::factory()->count(1)->create();
 
         Post::factory()->count(20)->create();
     }

@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class InsertDataStateRow extends Migration
+class InsertDataStatusPostsTable extends Migration
 {
     public function up()
     {

@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostUserController;
 use App\Http\Controllers\PostValidationController;
+use App\Http\Controllers\CategoryController;
 
 
 Auth::routes();
@@ -22,3 +23,7 @@ Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.upda
 Route::delete('/posts/{posts}', [PostController::class, 'destroy'])->name('posts.destroy');
 
 Route::get('/{user}/post', [PostUserController::class, 'show'])->name('postsUsers.show');
+Route::get('/{user}/post/create', [PostUserController::class, 'create'])->name('postsUsers.create');
+Route::post('/{user}/post/create', [PostUserController::class, 'store'])->name('postsUsers.store');
+
+Route::post('/{user}/select-category', [CategoryController::class, 'store'])->name('categories.store');

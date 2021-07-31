@@ -23,7 +23,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/dashboard') }}">
+                <a class="navbar-brand" href="{{ url('/blog') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -47,16 +47,18 @@
                                 </li>
                             @endif
                         @else
-                            {{-- <li class="nav-item">
-                                <a class="nav-link" href="{{ route('posts.create') }}">Crear post</a>
-                            </li> --}}
+                            @if(Auth::user()->is_validate == 1)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('postsUsers.show', Auth::user()->id)}}">Ver mis posts</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('postsUsers.create', Auth::user()->id)}}">Crear post</a>
+                            </li>
                             @if(Auth::user()->name === 'julian ignacio carelli')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('postsValidation.index')}}">Solicitudes para revisar posts</a>
-                                </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('postsValidation.index')}}">Solicitudes para revisar posts</a>
+                            </li>
+                            @endif
                             @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

@@ -13,14 +13,14 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-presentation">
-                        <h5 class="card-title"> {{ $post->title }} </h5>
+                        <h2 class="card-title" style="font-size: 26px;font-weight: 800;">{{ $post->title }}</h2>
                     </div>
                     <div class="card-category">
-                        <span class="card-category__title">{{ $post->category->title }}  </span>
+                        <span class="card-category__title" style="font-size: 18px;">{{ ucfirst($post->category->title) }}  </span>
                     </div>
-                    <p class="card-text">
-                        {{ $post->get_content }}...
-                    </p>
+                    <div class="card-content">
+                        <p class="card-text" style="font-size:18px;">{{ $post->get_content }}...</p>
+                    </div>
                     <a href="{{ route('posts.show', $post) }}" class="card-text">
                         Ver post completo
                     </a>

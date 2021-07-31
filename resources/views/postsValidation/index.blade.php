@@ -14,6 +14,7 @@
             </div>
         </div>
         <div class="col-md-8">
+
             @foreach($posts as $post)
             <div class="card mb-2">
                 <div class="card-body">
@@ -21,7 +22,7 @@
                         <h5 class="card-title"> {{ $post->title }} </h5>
                     </div>
                     <div class="card-category">
-                        <span class="card-category__title">{{ $post->category->title }}  </span>
+                        <span class="card-category__title">{{ ucfirst($post->category->title) }}  </span>
                     </div>
                     <p class="card-text">
                         {{ $post->get_content }}...

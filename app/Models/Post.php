@@ -12,10 +12,13 @@ class Post extends Model
     use Sluggable;
 
     protected $fillable = [
+        'user_id',
+        'category_id',
+        'status_posts_id',
         'title',
+        'image',
         'content',
         'is_validate',
-        'status_posts_id'
     ];
 
     public function sluggable(): array
@@ -26,6 +29,13 @@ class Post extends Model
                 'onUpdate' => true,
             ]
         ];
+    }
+
+    public function getGetImageAttribute()
+    {
+        if($this->image){
+            return url("storage/$this->image");
+        }
     }
 
     public function user()
@@ -45,6 +55,6 @@ class Post extends Model
 
     public function getGetContentAttribute()
     {
-        return substr($this->content, 0, 170);
+        return substr($this->content, 0, 500);
     }
 }
