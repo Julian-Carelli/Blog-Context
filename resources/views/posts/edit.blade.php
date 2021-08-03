@@ -29,10 +29,10 @@
             </div>
             <div class="col-sm-12 pt-3">
                 <label>Categoria del post</label>
-                <input type="text" name="category" value="{{old('category', ucfirst($post->category->title))}}" list="categoryList">
+                <input type="text" name="category" value="{{old('category', $post->category->title)}}" list="categoryList">
                 <datalist id="categoryList">
                     @foreach ($categories as $category)
-                        <option name="category" value="{{ucfirst($category->title)}}">
+                        <option value="{{$category->title}}">
                     @endforeach
                 </datalist>
             </div>
