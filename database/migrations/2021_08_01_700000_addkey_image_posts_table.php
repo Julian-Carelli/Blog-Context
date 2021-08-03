@@ -10,7 +10,7 @@ class addKeyImagePostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function($table) {
-            $table->string('key_image');
+            $table->string('key_image')->default('disable');
         });
     }
 
