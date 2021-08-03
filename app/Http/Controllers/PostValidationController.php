@@ -53,6 +53,7 @@ class PostValidationController extends Controller
             $filterPostUser = Post::where('category_id', $item->category->id)
                 ->where('status_posts_id', 1)
                 ->where('is_validate', 1)
+                ->orderBy('created_at','DESC')
                 ->get();
             $categorySearch[$key] = $item->category->id;
             array_push($categorySearch, $item->category->id);
@@ -61,13 +62,12 @@ class PostValidationController extends Controller
             }
         }
 
-
         $post = Post::whereNotIn('category_id', $categorySearch)
             ->where('status_posts_id', 1)
             ->where('is_validate', 1)
-            ->get();;
+            ->orderBy('created_at','DESC')
+            ->get();
         array_push($postCategoryForUser, $post);
-
 
         return view('postsValidation.show', [
             'posts' => $postCategoryForUser,

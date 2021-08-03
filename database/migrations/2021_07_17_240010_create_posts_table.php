@@ -15,7 +15,7 @@ class CreatePostsTable extends Migration
             $table->bigInteger('status_posts_id')->unsigned();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('image')->nulleable();
+            $table->string('image');
             $table->text('content');
             $table->boolean('is_validate')->default(0);
             $table->foreign('user_id')->references('id')->on('users');

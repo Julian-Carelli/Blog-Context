@@ -11,10 +11,10 @@ class InsertDataStatusPostsTable extends Migration
     {
         DB::table('status_posts')->insert(
             [
-                ['name' => 'approved'],
-                ['name' => 'rejected'],
-                ['name' => 'pending_in_review'],
-                ['name' => 'pending_in_validation']
+                ['name' => 'aprobado'],
+                ['name' => 'rechazado'],
+                ['name' => 'pendiente_de_revision'],
+                ['name' => 'pendiente_de_validacion']
             ]
         );
     }

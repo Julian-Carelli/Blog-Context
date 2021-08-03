@@ -28,9 +28,5 @@ class DatabaseSeeder extends Seeder
             'email' => 'ricardoalberto@gmail.com',
             'password' => bcrypt('secret'),
         ]);
-
-        CategoryUser::factory()->count(1)->create();
-
-        Post::factory()->count(20)->create();
     }
 }

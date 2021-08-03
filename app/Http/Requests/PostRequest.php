@@ -26,8 +26,8 @@ class PostRequest extends FormRequest
         return [
             'title' => 'required|unique:posts|min:10|max:60',
             'content' => 'required|min:500|max:5000',
-            'category_id' => 'requried',
-            'status_posts_id' => 'status_posts'
+            'category_id' => '',
+            'image' => ''
         ];
     }
 

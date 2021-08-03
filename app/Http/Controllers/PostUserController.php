@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use Illuminate\Pagination\Paginator;
@@ -37,21 +38,30 @@ class PostUserController extends Controller
     public function store(PostRequest $request)
     {
         $category = Category::where('title', strtolower($request->category))->first();
+        $uploadedFileUrl = null;
+        $publicIdFile = null;
+
+        if ($request->image && env('APP_ENV') == 'production') {
+            $uploadedFileUrl = cloudinary()->upload($request->file('image')->getRealPath())->getSecurePath();
+            $publicIdFile = cloudinary()->getPublicId();
+        }
+
         $post = Post::create(
             [
                 'user_id' => auth()->user()->id,
                 'category_id' => $category->id,
                 'status_posts_id' => 3,
-                'image' => $request->image ? $request->image : null,
+                'image' => $uploadedFileUrl ? $uploadedFileUrl : $request->image,
+                'key_image' => $publicIdFile ? $publicIdFile : 'disable',
             ] + $request->validated()
         );
 
-        if($request->image){
+        if ($request->image && env('APP_ENV') == 'local') {
             $post->image = $request->image->store('posts', 'public');
             $post->save();
         }
 
-        return redirect('/' . auth()->user()->id. '/post')->with('status', 'Post creado con exito');
+        return redirect('/' . Auth::user()->slug. '/post')->with('status', 'Post creado con exito');
     }
     public function show(User $user)
     {

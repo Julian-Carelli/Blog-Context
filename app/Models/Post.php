@@ -17,6 +17,7 @@ class Post extends Model
         'status_posts_id',
         'title',
         'image',
+        'key_image',
         'content',
         'is_validate',
     ];
@@ -50,7 +51,7 @@ class Post extends Model
 
     public function statusPost()
     {
-        return $this->belongsTo(StatusPosts::class);
+        return $this->belongsTo(StatusPosts::class, 'status_posts_id');
     }
 
     public function getGetContentAttribute()

@@ -9,7 +9,7 @@
             </div>
             @if($post->image)
             <div class="col-sm-12" style="border-radius:5px;padding: 20px 15px;">
-                <img src="{{ $post->get_image }}"class="card-img-top"/>
+                <img style="width:500px;" src="{{ env('APP_ENV') == 'local' ? $post->get_image : $post->image }}"class="card-img-top"/>
             @endif
             </div>
             <div class="col-sm-12" style="padding: 40px 15px;">

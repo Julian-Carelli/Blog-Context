@@ -37,18 +37,18 @@
                 </div>
             </div>
             <div class="d-flex">
-                <div class="pr-3 pb-3 pt-3">
-                    <form action="{{ route('postsValidation.updateRejectedState', $post) }}" method="POST">
-                        @method('PUT')
-                        @csrf
-                        <button class="btn btn-danger">Rechazar post</button>
-                    </form>
-                </div>
-                <div class="pb-3 pt-3">
+                <div class="pb-3 pt-3 pr-3">
                     <form action="{{ route('postsValidation.updateApprovedState', $post)}}" method="POST">
                     @method('PUT')
                     @csrf
                         <button class="btn btn-success">Aprobar post</button>
+                    </form>
+                </div>
+                <div class="pb-3 pt-3">
+                    <form action="{{ route('postsValidation.updateRejectedState', $post) }}" method="POST">
+                        @method('PUT')
+                        @csrf
+                        <button class="btn btn-danger">Rechazar post</button>
                     </form>
                 </div>
             </div>

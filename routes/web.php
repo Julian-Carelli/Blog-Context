@@ -17,13 +17,13 @@ Route::put('/request-posts/approved/{post}', [PostValidationController::class, '
 Route::put('/request-posts/rejected/{post}', [PostValidationController::class, 'updateRejectedState'])->name('postsValidation.updateRejectedState');
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/post/{post}', [PostController::class, 'show'])->name('posts.show');
-Route::get('/posts/{post}', [PostController::class, 'edit'])->name('posts.edit');
+Route::get('/post/{post:slug}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/posts/{post:slug}', [PostController::class, 'edit'])->name('posts.edit');
 Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
-Route::delete('/posts/{posts}', [PostController::class, 'destroy'])->name('posts.destroy');
+Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
-Route::get('/{user}/post', [PostUserController::class, 'show'])->name('postsUsers.show');
-Route::get('/{user}/post/create', [PostUserController::class, 'create'])->name('postsUsers.create');
+Route::get('/{user:slug}/post', [PostUserController::class, 'show'])->name('postsUsers.show');
+Route::get('/{user:slug}/post/create', [PostUserController::class, 'create'])->name('postsUsers.create');
 Route::post('/{user}/post/create', [PostUserController::class, 'store'])->name('postsUsers.store');
 
 Route::post('/{user}/select-category', [CategoryController::class, 'store'])->name('categories.store');
