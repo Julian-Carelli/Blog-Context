@@ -11,17 +11,17 @@ class InsertDataCategoriesTable extends Migration
     {
         DB::table('categories')->insert(
             [
-                ['title' => 'programacion'],
-                ['title' => 'javascript'],
-                ['title' => 'react'],
-                ['title' => 'laravel'],
-                ['title' => 'front-end'],
-                ['title' => 'backend'],
-                ['title' => 'bases de datos'],
-                ['title' => 'node'],
-                ['title' => 'mysql'],
-                ['title' => 'tecnologia'],
-                ['title' => 'diseño'],
+                ['id' => 1, 'title' => 'programacion'],
+                ['id' => 2, 'title' => 'javascript'],
+                ['id' => 3, 'title' => 'react'],
+                ['id' => 4, 'title' => 'laravel'],
+                ['id' => 5, 'title' => 'front-end'],
+                ['id' => 6, 'title' => 'backend'],
+                ['id' => 7, 'title' => 'bases de datos'],
+                ['id' => 8, 'title' => 'node'],
+                ['id' => 9, 'title' => 'mysql'],
+                ['id' => 10,'title' => 'tecnologia'],
+                ['id' => 11,'title' => 'diseño'],
             ]
         );
     }
