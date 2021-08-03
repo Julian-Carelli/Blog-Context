@@ -32,7 +32,7 @@
                 <input type="text" name="category" value="{{old('category', ucfirst($post->category->title))}}" list="categoryList">
                 <datalist id="categoryList">
                     @foreach ($categories as $category)
-                        <option value="{{ucfirst($category->title)}}">
+                        <option name="category" value="{{ucfirst($category->title)}}">
                     @endforeach
                 </datalist>
             </div>
