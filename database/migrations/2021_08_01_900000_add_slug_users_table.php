@@ -10,7 +10,7 @@ class addSlugUsersTable extends Migration
     public function up()
 {
     Schema::table('users', function($table) {
-        $table->string('slug')->unique();
+        $table->string('slug')->unique()->default('');
     });
 }
 
