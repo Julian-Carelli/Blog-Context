@@ -53,7 +53,7 @@ class PostController extends Controller
 
     public function update(PostRequest $request, Post $post)
     {
-        $categoryChoosed = Category::where('title', $request->category)->first();
+        $categoryChoosed = Category::where('title', strtolower($request->category))->first();
         $uploadedFileUrl = null;
         $publicIdFile = null;
         $keyImage = Post::where('id', $post->id)->first()->key_image;
