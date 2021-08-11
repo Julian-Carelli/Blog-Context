@@ -2,32 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Pagination\Paginator;
+use App\Http\Requests\PostRequest;
+use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Category;
 use Auth;
-use Illuminate\Http\Request;
-use App\Http\Requests\PostRequest;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Storage;
 
 class PostUserController extends Controller
 {
     protected $paginator;
+    protected $category;
+    protected $post;
 
     public function __construct()
     {
         $this->middleware('auth');
         $this->paginator =  Paginator::useBootstrap();
+        $this->category = new Category;
+        $this->post = new Post;
     }
 
     public function index()
     {
+        $user = Auth::user();
+        $posts = $this->post->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('postsUsers.show', [
+            'posts' => $posts,
+            'user'  => $user,
+        ]);
     }
 
     public function create(User $user)
     {
-        $categories = Category::all();
+        $categories = $this->category->all();
 
         return view('postsUsers.create',[
             'categories' => $categories
@@ -37,7 +48,8 @@ class PostUserController extends Controller
 
     public function store(PostRequest $request)
     {
-        $category = Category::where('title', strtolower($request->category))->first();
+        $user = Auth::user();
+        $category = $this->category->where('title', strtolower($request->category))->first();
         $uploadedFileUrl = null;
         $publicIdFile = null;
 
@@ -46,9 +58,9 @@ class PostUserController extends Controller
             $publicIdFile = cloudinary()->getPublicId();
         }
 
-        $post = Post::create(
+        $post = $this->post->create(
             [
-                'user_id' => auth()->user()->id,
+                'user_id' => $user->id,
                 'category_id' => $category->id,
                 'status_posts_id' => 3,
                 'image' => $uploadedFileUrl ? $uploadedFileUrl : $request->image,
@@ -61,16 +73,10 @@ class PostUserController extends Controller
             $post->save();
         }
 
-        return redirect('/' . Auth::user()->slug. '/post')->with('status', 'Post creado con exito');
+        return redirect('/' . $user->slug. '/post')->with('status', 'Post creado con exito');
     }
     public function show(User $user)
     {
-        $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
-
-        return view('postsUsers.show', [
-            'posts' => $posts,
-            'user'  => $user,
-        ]);
     }
 
     public function edit(Post $post)
