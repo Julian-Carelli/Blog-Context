@@ -49,14 +49,14 @@
                         @else
                             @if(Auth::user()->is_validate == 1)
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('postsUsers.show', Auth::user())}}">Ver mis posts</a>
+                                <a class="nav-link" href="{{ route('postsUsers.index', Auth::user())}}">Ver mis posts</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('postsUsers.create', Auth::user())}}">Crear post</a>
                             </li>
                             @if(Auth::user()->name === 'julian ignacio carelli')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('postsValidation.index')}}">Solicitudes para revisar posts</a>
+                                <a class="nav-link" href="{{ route('postsValidation.requestPostValidation')}}">Solicitudes para revisar posts</a>
                             </li>
                             @endif
                             @endif

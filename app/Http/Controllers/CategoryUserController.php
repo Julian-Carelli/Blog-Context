@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\CategoryUser;
-use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
 use Illuminate\Routing\Redirector;
+use Illuminate\Http\Request;
+use App\Models\CategoryUser;
+use App\Models\User;
 
-class CategoryController extends Controller
+class CategoryUserController extends Controller
 {
+    protected $categoryUser;
+    protected $user;
+
+    public function __construct()
+    {
+        $this->categoryUser = new CategoryUser;
+        $this->user = new User;
+    }
+
     public function store(CategoryRequest $request, User $user)
     {
         $array = $request->validated();
@@ -17,13 +26,13 @@ class CategoryController extends Controller
         foreach($arrayCombined as $item){
             $categoryId = intval((substr($item, 9)));
 
-            CategoryUser::create([
+            $this->categoryUser->create([
                 'user_id' => $user->id,
                 'category_id' => $categoryId
             ]);
         }
 
-        User::where('id', $user->id)->update(['is_validate' => 1]);
+        $this->user->where('id', $user->id)->update(['is_validate' => 1]);
 
         return redirect()->route('postsValidation.show');
     }

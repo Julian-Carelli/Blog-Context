@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="col-md-10">
-            <form action="{{ route('categories.store', auth()->user()->id )}}" method="POST">
+            <form action="{{ route('categoriesUsers.store', auth()->user()->id )}}" method="POST">
             @foreach($categories as $key => $category)
             <div class="card mb-4">
                 <div class="card-body">
