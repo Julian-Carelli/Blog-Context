@@ -15,7 +15,7 @@ class InsertDataCategoriesTable extends Migration
                 ['id' => 2, 'title' => 'javascript'],
                 ['id' => 3, 'title' => 'react'],
                 ['id' => 4, 'title' => 'laravel'],
-                ['id' => 5, 'title' => 'front-end'],
+                ['id' => 5, 'title' => 'front end'],
                 ['id' => 6, 'title' => 'backend'],
                 ['id' => 7, 'title' => 'bases de datos'],
                 ['id' => 8, 'title' => 'node'],
