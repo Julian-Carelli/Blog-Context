@@ -20,7 +20,6 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
         $this->paginator =  Paginator::useBootstrap();
         $this->categoryUser = new CategoryUser;
         $this->category = new Category;
@@ -59,5 +58,10 @@ class HomeController extends Controller
         return view('postsValidation.show', [
             'posts' => $postCategoryForUser
         ]);
+    }
+
+    public function home()
+    {
+        return view('home');
     }
 }

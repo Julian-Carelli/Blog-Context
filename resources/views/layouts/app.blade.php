@@ -18,13 +18,32 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+    .category-navigation::-webkit-scrollbar {
+    display: none;
+}
+    textarea::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5; }
+
+    textarea::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #253b8c; }
+    </style>
+
+    <!-- Tailwind -->
+    <link rel="stylesheet" href="{{ url(mix('css/app.css')) }}">
 </head>
-<body>
+<body style="background-color: #fff;">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        @if(Auth()->user())
+        <nav class="navbar navbar-expand-xl navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/blog') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <img style="width:50px" src="{{ asset('img/context.png') }} "/>
+                <a class="navbar-brand" style="font-size:18px" href="{{ url('/blog') }}">
+                    Conte<span style="font-size:18px;color:#253b8c;font-weight:800">XT</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -48,20 +67,24 @@
                             @endif
                         @else
                             @if(Auth::user()->is_validate == 1)
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('postsUsers.index', Auth::user())}}">Ver mis posts</a>
+                            <li class="nav-item px-3">
+                                <a class="text-black hover:no-underline hover:text-blue-600" href="{{ route('postsUsers.index', Auth::user())}}">
+                                    <i class="fas fa-bookmark"></i>
+                                </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('postsUsers.create', Auth::user())}}">Crear post</a>
+                            <li class="nav-item px-3">
+                                <a class="text-black hover:no-underline hover:text-blue-600" href="{{ route('postsUsers.create', Auth::user())}}">
+                                    <i class="fas fa-file-signature"></i>
+                                </a>
                             </li>
                             @if(Auth::user()->name === 'julian ignacio carelli')
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('postsValidation.requestPostValidation')}}">Solicitudes para revisar posts</a>
+                            <li class="nav-item px-3">
+                                <a class="text-black hover:no-underline hover:text-blue-600"  href="{{ route('postsValidation.requestPostValidation')}}">Solicitudes para revisar posts</a>
                             </li>
                             @endif
                             @endif
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <li class="nav-item  px-3 dropdown">
+                                <a id="navbarDropdown" class="text-black hover:no-underline hover:text-blue-600 dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
@@ -81,8 +104,9 @@
                 </div>
             </div>
         </nav>
+        @endif
 
-        <main class="py-4">
+        <main style="background-color: #fff;">
             @yield('content')
         </main>
     </div>

@@ -1,16 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\PostUserController;
 use App\Http\Controllers\PostValidationController;
 use App\Http\Controllers\CategoryUserController;
-
+use App\Http\Controllers\PostUserController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
 
 Auth::routes();
-Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
-
+Route::get('/dashboard', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'home'])->name('home.home');
 Route::get('/request-posts', [PostValidationController::class, 'requestPostValidation'])->name('postsValidation.requestPostValidation');
 Route::get('/blog', [PostValidationController::class, 'index'])->name('postsValidation.index');
 Route::put('/request-posts/approved/{post}', [PostValidationController::class, 'updateApprovedState'])->name('postsValidation.updateApprovedState');
@@ -26,4 +25,5 @@ Route::get('/{user:slug}/post', [PostUserController::class, 'index'])->name('pos
 Route::get('/{user:slug}/post/create', [PostUserController::class, 'create'])->name('postsUsers.create');
 Route::post('/{user}/post/create', [PostUserController::class, 'store'])->name('postsUsers.store');
 
+Route::get('/blog/{categoryTitle:slug}', [CategoryUserController::class, 'index'])->name('categoryUser.index');
 Route::post('/{user}/select-category', [CategoryUserController::class, 'store'])->name('categoriesUsers.store');

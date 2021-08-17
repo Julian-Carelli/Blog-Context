@@ -37,8 +37,8 @@ class PostValidationController extends Controller
 
         foreach($allCategoryUser as $key => $item){
             $filterPostUser = $this->post->where('category_id', $item->category->id)
-                ->where('status_posts_id', 1)
-                ->where('is_validate', 1)
+                ->orWhere('status_posts_id', 1)
+                ->orWhere('is_validate', 1)
                 ->orderBy('created_at','DESC')
                 ->get();
             $categorySearch[$key] = $item->category->id;
@@ -57,6 +57,7 @@ class PostValidationController extends Controller
 
         return view('postsValidation.show', [
             'posts' => $postCategoryForUser,
+            'categories' => $allCategoryUser,
         ]);
     }
 
