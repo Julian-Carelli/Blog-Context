@@ -10,7 +10,7 @@
                         {{ __('Dashboard') }}
                     </div>
                     <div class="pl-3">
-                        <a href="{{ route('postsValidation.show') }}">Ir al blog</a>
+                        <a href="{{ route('postsValidation.index') }}">Ir al blog</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -39,7 +39,7 @@
                                     <a href="{{route('posts.show', $post->id)}}">{{ $post->id }}</a>
                                 </td>
                                 <td>
-                                    <a href="{{route('postsValidation.index', $post->user_id)}}">
+                                    <a href="{{route('postsValidation.requestPostValidation', $post->user_id)}}">
                                         {{ $post->user->name }}
                                     </a>
                                 </td>
@@ -49,7 +49,7 @@
                                 <td>
                                     <form>
                                         <button type="submit" class="btn btn-primary btn-md-3">
-                                            <a style="color:white;" href="{{route('posts.edit', $post->id)}}">Editar</a>
+                                            <a style="color:white;" href="{{route('posts.edit', $post->slug)}}">Editar</a>
                                         </button>
                                     </form>
                                 </td>

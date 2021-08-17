@@ -2,26 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\PostRequest;
+use App\Models\CategoryUser;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\CategoryUser;
-use App\Http\Requests\PostRequest;
-use Illuminate\Pagination\Paginator;
+use Auth;
 
 class PostValidationController extends Controller
 {
     protected $paginator;
+    protected $categoryUser;
+    protected $post;
+    protected $user;
 
-    public function __construct()
+    public function __construct(Post $post, User $user)
     {
         $this->middleware('auth');
         $this->paginator =  Paginator::useBootstrap();
+        $this->categoryUser = new CategoryUser;
+        $this->post = new Post;
+        $this->user = new User;
     }
 
     public function index()
     {
-        $posts = Post::where('is_validate', 0);
+        $user = Auth::user();
+        $userExist = $this->user->where('id', $user->id)
+        ->where('is_validate', 1)->first();
+        $allCategoryUser = $this->categoryUser->where('user_id', $user->id)->get();
+        $postCategoryForUser = [];
+        $categorySearch = [];
+
+        foreach($allCategoryUser as $key => $item){
+            $filterPostUser = $this->post->where('category_id', $item->category->id)
+                ->orWhere('status_posts_id', 1)
+                ->orWhere('is_validate', 1)
+                ->orderBy('created_at','DESC')
+                ->get();
+            $categorySearch[$key] = $item->category->id;
+            array_push($categorySearch, $item->category->id);
+            if (count($filterPostUser) > 0) {
+                array_push($postCategoryForUser, $filterPostUser);
+            }
+        }
+
+        $post = $this->post->whereNotIn('category_id', $categorySearch)
+            ->where('status_posts_id', 1)
+            ->where('is_validate', 1)
+            ->orderBy('created_at','DESC')
+            ->get();
+        array_push($postCategoryForUser, $post);
+
+        return view('postsValidation.show', [
+            'posts' => $postCategoryForUser,
+            'categories' => $allCategoryUser,
+        ]);
+    }
+
+    public function requestPostValidation()
+    {
+        $posts = $this->post->where('is_validate', 0);
         $totalPosts = $posts->count();
         $postOrdered = $posts->orderBy('created_at', 'desc');
 
@@ -43,35 +85,7 @@ class PostValidationController extends Controller
 
     public function show(Post $post)
     {
-        $userExist = User::where('id', auth()->user()->id)
-        ->where('is_validate', 1)->first();
-        $allCategoryUser = CategoryUser::where('user_id', auth()->user()->id)->get();
-        $postCategoryForUser = [];
-        $categorySearch = [];
 
-        foreach($allCategoryUser as $key => $item){
-            $filterPostUser = Post::where('category_id', $item->category->id)
-                ->where('status_posts_id', 1)
-                ->where('is_validate', 1)
-                ->orderBy('created_at','DESC')
-                ->get();
-            $categorySearch[$key] = $item->category->id;
-            array_push($categorySearch, $item->category->id);
-            if (count($filterPostUser) > 0) {
-                array_push($postCategoryForUser, $filterPostUser);
-            }
-        }
-
-        $post = Post::whereNotIn('category_id', $categorySearch)
-            ->where('status_posts_id', 1)
-            ->where('is_validate', 1)
-            ->orderBy('created_at','DESC')
-            ->get();
-        array_push($postCategoryForUser, $post);
-
-        return view('postsValidation.show', [
-            'posts' => $postCategoryForUser,
-        ]);
     }
 
     public function edit(Post $post)
@@ -81,7 +95,7 @@ class PostValidationController extends Controller
 
     public function updateRejectedState(Post $post)
     {
-        Post::where('id', $post->id)->update(
+        $this->post->where('id', $post->id)->update(
             [
                 'is_validate' => 1,
                 'status_posts_id' => 2
@@ -93,7 +107,7 @@ class PostValidationController extends Controller
 
     public function updateApprovedState(Post $post)
     {
-        Post::where('id', $post->id)->update(
+        $this->post->where('id', $post->id)->update(
             [
                 'is_validate' => 1,
                 'status_posts_id' => 1

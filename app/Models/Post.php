@@ -56,6 +56,6 @@ class Post extends Model
 
     public function getGetContentAttribute()
     {
-        return substr($this->content, 0, 500);
+        return substr($this->content, 0, 800);
     }
 }

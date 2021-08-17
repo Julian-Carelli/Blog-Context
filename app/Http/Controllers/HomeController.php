@@ -2,37 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use App\Models\Post;
+use Illuminate\Http\Request;
 use App\Models\CategoryUser;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Post;
+use Auth;
 
 class HomeController extends Controller
 {
     protected $paginator;
+    protected $categoryUser;
+    protected $category;
+    protected $user;
+    protected $post;
 
     public function __construct()
     {
-        $this->middleware('auth');
         $this->paginator =  Paginator::useBootstrap();
+        $this->categoryUser = new CategoryUser;
+        $this->category = new Category;
+        $this->post = new Post;
+        $this->user = new User;
     }
 
     public function index()
     {
-        $userExist = User::where('id', auth()->user()->id)
+        $user = Auth::user();
+        $userExist = $this->user->where('id', $user->id)
         ->where('is_validate', 1)->first();
-        $allCategoryUser = CategoryUser::where('user_id', auth()->user()->id)->get();
+        $allCategoryUser = $this->categoryUser->where('user_id', $user->id)->get();
         $postCategoryForUser = [];
 
         foreach($allCategoryUser as $item){
-            $allPostUser = Post::where('category_id', $item->category->id)->first();
+            $allPostUser = $this->post->where('category_id', $item->category->id)->first();
             array_push($postCategoryForUser, $allPostUser);
         }
 
-        if (auth()->user()->id == 1) {
-            $posts = Post::latest();
+        if ($user->id == 1) {
+            $posts = $this->post->latest();
             $postOrdered = $posts->orderBy('created_at', 'desc');
             return view('dashboard', [
                 'posts' => $postOrdered->paginate(10)
@@ -40,7 +49,7 @@ class HomeController extends Controller
         }
 
         if (!$userExist) {
-            $categories = Category::all();
+            $categories = $this->category->all();
             return view('categories.index', [
                 'categories' => $categories
             ]);
@@ -49,5 +58,10 @@ class HomeController extends Controller
         return view('postsValidation.show', [
             'posts' => $postCategoryForUser
         ]);
+    }
+
+    public function home()
+    {
+        return view('home');
     }
 }

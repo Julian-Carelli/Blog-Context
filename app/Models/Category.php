@@ -9,6 +9,16 @@ class Category extends Model
 {
     use HasFactory;
 
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title',
+                'onUpdate' => true,
+            ]
+        ];
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);
