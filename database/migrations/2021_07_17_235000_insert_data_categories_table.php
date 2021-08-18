@@ -11,23 +11,23 @@ class InsertDataCategoriesTable extends Migration
     {
         DB::table('categories')->insert(
             [
-                ['id' => 1, 'title' => 'programacion'],
-                ['id' => 2, 'title' => 'javascript'],
-                ['id' => 3, 'title' => 'react'],
-                ['id' => 4, 'title' => 'laravel'],
-                ['id' => 5, 'title' => 'front end'],
-                ['id' => 6, 'title' => 'backend'],
-                ['id' => 7, 'title' => 'bases de datos'],
-                ['id' => 8, 'title' => 'node'],
-                ['id' => 9, 'title' => 'mysql'],
-                ['id' => 10,'title' => 'tecnologia'],
-                ['id' => 11,'title' => 'diseño'],
+                ['id' => 1, 'title' => 'programacion', 'slug' => 'programacion'],
+                ['id' => 2, 'title' => 'javascript', 'slug' => 'javascript'],
+                ['id' => 3, 'title' => 'react', 'slug' => 'react'],
+                ['id' => 4, 'title' => 'laravel', 'slug' => 'laravel'],
+                ['id' => 5, 'title' => 'front end', 'slug' => 'front-end'],
+                ['id' => 6, 'title' => 'backend', 'slug' => 'backend'],
+                ['id' => 7, 'title' => 'bases de datos', 'slug' => 'bases-de-datos'],
+                ['id' => 8, 'title' => 'node', 'slug' => 'node'],
+                ['id' => 9, 'title' => 'mysql', 'slug' => 'mysql'],
+                ['id' => 10,'title' => 'tecnologia', 'slug' => 'tecnologia'],
+                ['id' => 11,'title' => 'diseño', 'slug' => 'diseño'],
             ]
         );
     }
 
     public function down()
     {
-        DB::table('status_posts')->truncate();
+        DB::table('categories')->truncate();
     }
 }
