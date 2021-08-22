@@ -30,7 +30,7 @@ class PostUserController extends Controller
         $user = Auth::user();
         $posts = $this->post->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('postsUsers.show', [
+        return view('postsUsers.index', [
             'posts' => $posts,
             'user'  => $user,
         ]);

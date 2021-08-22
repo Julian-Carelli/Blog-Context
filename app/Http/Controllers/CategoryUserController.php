@@ -33,6 +33,8 @@ class CategoryUserController extends Controller
         $allCategoryUser = $this->categoryUser->where('user_id', $user->id)->get();
         $categoryUser = $this->category->where('title', str_replace('-', ' ',$categoryTitle))->first();
         $posts = $this->post->where('category_id', $categoryUser->id)
+                            ->where('is_validate', 1)
+                            ->where('status_posts_id', 1)
                             ->orderBy('id', 'DESC')
                             ->get();
         $categoryUser = $this->categoryUser->where('user_id', $user->id)->get();

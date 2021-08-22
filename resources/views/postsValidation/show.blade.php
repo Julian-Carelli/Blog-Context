@@ -16,8 +16,8 @@
     </div>
     <div class="justify-content-center">
         <div class="xs:px-3 sm:px-3">
-            @foreach($posts as $post)
-                @foreach($post as $key => $item)
+            @foreach($posts as $key => $post)
+                @foreach($post as $item)
                 <div class="card mb-4 p-3" style="{{ $key % 2 ? 'background-color:white;' : 'background-color:#253b8c;'}} border:none;">
                     <div class="py-3">
                         <p style="{{ $key % 2 ? 'color:black' : 'color:white;'}}" class="card-text xs:text-xs sm:text-sm mx:text-sm lg:text-sm xl:text-sm">
