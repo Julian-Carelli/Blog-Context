@@ -32,21 +32,6 @@ class HomeController extends Controller
         $user = Auth::user();
         $userExist = $this->user->where('id', $user->id)
         ->where('is_validate', 1)->first();
-        $allCategoryUser = $this->categoryUser->where('user_id', $user->id)->get();
-        $postCategoryForUser = [];
-
-        foreach($allCategoryUser as $item){
-            $allPostUser = $this->post->where('category_id', $item->category->id)->first();
-            array_push($postCategoryForUser, $allPostUser);
-        }
-
-        if ($user->id == 1) {
-            $posts = $this->post->latest();
-            $postOrdered = $posts->orderBy('created_at', 'desc');
-            return view('dashboard', [
-                'posts' => $postOrdered->paginate(10)
-            ]);
-        }
 
         if (!$userExist) {
             $categories = $this->category->all();
@@ -54,7 +39,19 @@ class HomeController extends Controller
                 'categories' => $categories
             ]);
         }
+        if ($user->id == 1) {
+            $posts = $this->post->latest()->orderBy('created_at', 'desc');
+            return view('dashboard', [
+                'posts' => $posts->paginate(10)
+            ]);
+        }
 
+        $allCategoryUser = $this->categoryUser->where('user_id', $user->id)->get();
+        $postCategoryForUser = [];
+        foreach($allCategoryUser as $item){
+            $allPostUser = $this->post->where('category_id', $item->category->id)->first();
+            array_push($postCategoryForUser, $allPostUser);
+        }
         return view('postsValidation.show', [
             'posts' => $postCategoryForUser
         ]);

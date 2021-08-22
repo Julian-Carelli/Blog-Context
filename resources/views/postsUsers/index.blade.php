@@ -33,7 +33,7 @@
 
                     </div>
                     <div class="card-category d-flex">
-                        <span class="card-category__title xs:text-lg sm:text-lg md:text-lg lg-text-lg xl:text-lg" style="{{ $key % 2 ? 'color:black' : 'color:white;'}}">{{ ucfirst($post->category->title) }} - {{ str_replace('-', ' ',ucfirst($post->statusPost->name))}}</span>
+                        <span class="card-category__title xs:text-lg sm:text-lg md:text-lg lg-text-lg xl:text-lg" style="{{ $key % 2 ? 'color:black' : 'color:white;'}}">{{ ucfirst($post->category->title) }} - {{ str_replace('_', ' ',ucfirst($post->statusPost->name))}}</span>
                     </div>
                     <div class="card-content">
                         <p class="xs:leading-6 sm:leading-7 md:leading-7 lg:leading-7 xl:leading-7 xs:text-base sm:text-lg md:text-lg lg-text-base xl:text-base" style="padding:25px 0px;{{ $key % 2 ? 'color:black' : 'color:white;'}}">{{ $post->get_content }}...</p>

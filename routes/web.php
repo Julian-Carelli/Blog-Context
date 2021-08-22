@@ -8,7 +8,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
-Route::get('/dashboard', [HomeController::class, 'index']);
+Route::get('/dashboard', [HomeController::class, 'index'])->name('home.index');
 Route::get('/', [HomeController::class, 'home'])->name('home.home');
 Route::get('/request-posts', [PostValidationController::class, 'requestPostValidation'])->name('postsValidation.requestPostValidation');
 Route::get('/blog', [PostValidationController::class, 'index'])->name('postsValidation.index');
