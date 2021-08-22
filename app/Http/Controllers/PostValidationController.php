@@ -31,17 +31,21 @@ class PostValidationController extends Controller
         $user = Auth::user();
         $userExist = $this->user->where('id', $user->id)
         ->where('is_validate', 1)->first();
+
+        if (!$userExist) {
+            return redirect()->route('home.index');
+        }
+
         $allCategoryUser = $this->categoryUser->where('user_id', $user->id)->get();
         $postCategoryForUser = [];
         $categorySearch = [];
 
         foreach($allCategoryUser as $key => $item){
             $filterPostUser = $this->post->where('category_id', $item->category->id)
-                ->orWhere('status_posts_id', 1)
-                ->orWhere('is_validate', 1)
+                ->where('status_posts_id', 1)
+                ->where('is_validate', 1)
                 ->orderBy('created_at','DESC')
                 ->get();
-            $categorySearch[$key] = $item->category->id;
             array_push($categorySearch, $item->category->id);
             if (count($filterPostUser) > 0) {
                 array_push($postCategoryForUser, $filterPostUser);
@@ -97,7 +101,7 @@ class PostValidationController extends Controller
     {
         $this->post->where('id', $post->id)->update(
             [
-                'is_validate' => 1,
+                'is_validate' => 0,
                 'status_posts_id' => 2
             ],
         );
